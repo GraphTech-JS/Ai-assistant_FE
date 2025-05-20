@@ -23,7 +23,7 @@ const variantStyles: Record<Variant, string> = {
 const sizeStyles: Record<NonNullable<ButtonProps["size"]>, string> = {
   large: "h-[73px] w-[316px] rounded-[5px] px-[9px]",
   medium:
-    "h-[48px] md:h-[61px] w-full md:max-w-[286px] text-center rounded-[5px]",
+    "h-[48px] md:h-[61px] w-full lg:max-w-[286px] text-center rounded-[5px]",
   small: "w-[136px] h-[48px] rounded-[5px] px-4",
 };
 

@@ -52,7 +52,7 @@ export default function SessionDetailPage() {
         ))}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col lg:flex-row gap-2">
         <textarea
           placeholder="Напишіть повідомлення"
           value={input}

@@ -18,7 +18,7 @@ export default function KnowledgePage() {
       </ThemedText>
 
       <textarea
-        className="w-full h-[400px] p-4 border border-gray-300 rounded resize-none
+        className="w-full h-[200px] md:h-[400px] p-4 border border-gray-300 bg-white rounded resize-none
                    focus:outline-none focus:ring-2 focus:ring-blue-200 transition-colors"
         value={content}
         onChange={(e) => setContent(e.target.value)}
