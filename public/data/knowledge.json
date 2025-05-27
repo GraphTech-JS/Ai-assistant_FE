@@ -1,42 +1,82 @@
 [
   {
-    "pageContent": "Hotel Azure Dream is a 3-star luxury resort located on the coast of a fictional Azure Bay. It features 120 ocean-view rooms, 3 restaurants, a spa, an infinity pool, and a private beach. The hotel offers premium services such as personal butlers, yacht tours, and helicopter transfers",
+    "pageContent": "Наша онлайн-школа іноземних мов пропонує навчання з англійської, німецької, іспанської, французької, італійської, польської та інших мов. Ми навчаємо як дорослих, так і дітей. Заняття проходять онлайн з професійними викладачами та носіями мови.",
     "metadata": {
       "category": "general",
       "language": "ua",
-      "id": "about-hotel"
+      "id": "about-school"
     }
   },
   {
-    "pageContent": "Hotel Azure Dream offers three types of rooms: Standard (30m², king bed, balcony), Deluxe (40m², ocean view, private jacuzzi), and Royal Suite (100m², 2 bedrooms, living room, sea panorama). All rooms include air conditioning, smart TV, minibar, and daily housekeeping.",
+    "pageContent": "We are an online language school offering courses in English, German, Spanish, French, Italian, Polish and more. Lessons are held online with qualified teachers and native speakers. We teach both adults and children.",
     "metadata": {
-      "category": "rooms",
+      "category": "general",
       "language": "en",
-      "id": "room-types"
+      "id": "about-school-en"
     }
   },
   {
-    "pageContent": "Guests can enjoy various activities such as yoga classes, diving tours, wine tastings, and sunset cruises. The hotel also offers a kids' club and a wellness center.",
+    "pageContent": "Ми пропонуємо пробне заняття тривалістю 25 хвилин, під час якого викладач оцінить рівень знань, познайомить зі структурою курсу та допоможе сформувати персональний план навчання. Пробне заняття безкоштовне.",
     "metadata": {
-      "category": "activities",
-      "language": "en",
-      "id": "activities"
+      "category": "trial",
+      "language": "ua",
+      "id": "trial-lesson"
     }
   },
   {
-    "pageContent": "For reservations or inquiries, call +123 456 123 or email info@azuredream.fake. Address: Azure Bay, Dreamland Island, Fiction Country.",
+    "pageContent": "We offer a free 25-minute trial lesson. During this session, the teacher will assess your level, introduce the course structure, and help create a personalized learning plan.",
     "metadata": {
-      "category": "contact",
+      "category": "trial",
       "language": "en",
-      "id": "contact"
+      "id": "trial-lesson-en"
     }
   },
   {
-    "pageContent": "Azure Dream features three on-site restaurants: Ocean Pearl (seafood fine dining), Terra Bistro (international cuisine), and SkyBar (cocktails and tapas on the rooftop). Room service is available 24/7.",
+    "pageContent": "Наші курси поділені за рівнями (A1–C2) та цілями: для подорожей, роботи, навчання за кордоном, підготовки до іспитів (IELTS, TOEFL, Goethe-Zertifikat). Формати занять: індивідуальні, парні та міні-групи (до 4 людей). Хочеш перевірю просто твій рівень знань?",
     "metadata": {
-      "category": "dining",
+      "category": "courses",
+      "language": "ua",
+      "id": "course-formats"
+    }
+  },
+  {
+    "pageContent": "Our courses are structured by levels (A1–C2) and goals: travel, business, study abroad, and exam preparation (IELTS, TOEFL, Goethe-Zertifikat). Formats: individual, pair and mini-groups (up to 4 students).",
+    "metadata": {
+      "category": "courses",
       "language": "en",
-      "id": "restaurant-info"
+      "id": "course-formats-en"
+    }
+  },
+  {
+    "pageContent": "Викладач ставить питання щодо цілі навчання, віку, попереднього досвіду, бажаного графіку. Це допомагає підібрати оптимальний курс та формат.",
+    "metadata": {
+      "category": "conversation-guidance",
+      "language": "ua",
+      "id": "qualifying-questions"
+    }
+  },
+  {
+    "pageContent": "The teacher asks questions about your learning goal, age, prior experience, and preferred schedule. This helps to select the best course and format.",
+    "metadata": {
+      "category": "conversation-guidance",
+      "language": "en",
+      "id": "qualifying-questions-en"
+    }
+  },
+  {
+    "pageContent": "Мета асистента — зацікавити користувача, пояснити переваги пробного уроку, відповісти на заперечення (наприклад, “немає часу”, “ще подумаю”) та привести до запису.",
+    "metadata": {
+      "category": "goal",
+      "language": "ua",
+      "id": "sales-goal"
+    }
+  },
+  {
+    "pageContent": "The assistant's goal is to engage the user, explain the benefits of the trial lesson, handle objections (like 'I don’t have time', 'I’ll think about it'), and lead to a booking.",
+    "metadata": {
+      "category": "goal",
+      "language": "en",
+      "id": "sales-goal-en"
     }
   }
 ]
