@@ -2,15 +2,34 @@
 
 import { ThemedText } from "@/components/ui/ThemedText";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const mockSessions = [
-  { id: "1", title: "Сесія #1", lastMessage: "Привіт, як справи?" },
-  { id: "2", title: "Сесія #2", lastMessage: "Як працює AI?" },
-];
+interface Session {
+  id: string;
+  title: string;
+  lastMessage: string;
+}
 
 export default function SessionsPage() {
-  const [sessions] = useState(mockSessions);
+  const [sessions, setSessions] = useState<Session[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/sessions")
+      .then((res) => res.json())
+      .then((data) => {
+        setSessions(data.sessions || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("❌ Failed to fetch sessions:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <ThemedText type="text">Завантаження...</ThemedText>;
+  }
 
   return (
     <div>
@@ -40,6 +59,11 @@ export default function SessionsPage() {
             </Link>
           </li>
         ))}
+        {sessions.length === 0 && (
+          <li>
+            <ThemedText type="text">Сесій ще немає.</ThemedText>
+          </li>
+        )}
       </ul>
     </div>
   );

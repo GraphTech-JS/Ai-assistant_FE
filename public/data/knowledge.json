@@ -1,0 +1,42 @@
+[
+  {
+    "pageContent": "Hotel Azure Dream is a 3-star luxury resort located on the coast of a fictional Azure Bay. It features 120 ocean-view rooms, 3 restaurants, a spa, an infinity pool, and a private beach. The hotel offers premium services such as personal butlers, yacht tours, and helicopter transfers",
+    "metadata": {
+      "category": "general",
+      "language": "ua",
+      "id": "about-hotel"
+    }
+  },
+  {
+    "pageContent": "Hotel Azure Dream offers three types of rooms: Standard (30m², king bed, balcony), Deluxe (40m², ocean view, private jacuzzi), and Royal Suite (100m², 2 bedrooms, living room, sea panorama). All rooms include air conditioning, smart TV, minibar, and daily housekeeping.",
+    "metadata": {
+      "category": "rooms",
+      "language": "en",
+      "id": "room-types"
+    }
+  },
+  {
+    "pageContent": "Guests can enjoy various activities such as yoga classes, diving tours, wine tastings, and sunset cruises. The hotel also offers a kids' club and a wellness center.",
+    "metadata": {
+      "category": "activities",
+      "language": "en",
+      "id": "activities"
+    }
+  },
+  {
+    "pageContent": "For reservations or inquiries, call +123 456 123 or email info@azuredream.fake. Address: Azure Bay, Dreamland Island, Fiction Country.",
+    "metadata": {
+      "category": "contact",
+      "language": "en",
+      "id": "contact"
+    }
+  },
+  {
+    "pageContent": "Azure Dream features three on-site restaurants: Ocean Pearl (seafood fine dining), Terra Bistro (international cuisine), and SkyBar (cocktails and tapas on the rooftop). Room service is available 24/7.",
+    "metadata": {
+      "category": "dining",
+      "language": "en",
+      "id": "restaurant-info"
+    }
+  }
+]

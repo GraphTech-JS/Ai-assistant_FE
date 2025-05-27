@@ -1,0 +1,46 @@
+{
+  "a25fe5bd-9e5e-49ae-a38e-e5c4ff4be799": [
+    {
+      "from": "user",
+      "text": "obj\n",
+      "timestamp": "2025-05-27T14:11:20.333Z"
+    },
+    {
+      "from": "ai",
+      "text": "На жаль, не знайшов відповіді у базі знань.",
+      "timestamp": "2025-05-27T14:11:23.334Z"
+    },
+    {
+      "from": "user",
+      "text": "Шукай тоді",
+      "timestamp": "2025-05-27T14:17:18.466Z"
+    },
+    {
+      "from": "ai",
+      "text": "Вибачте, я не знаю, що ви маєте на увазі.",
+      "timestamp": "2025-05-27T14:17:20.047Z"
+    }
+  ],
+  "2424ce38-0b4b-4cae-b3cd-290ee1c0cf65": [
+    {
+      "from": "user",
+      "text": "Привіт!",
+      "timestamp": "2025-05-27T14:38:28.216Z"
+    },
+    {
+      "from": "ai",
+      "text": "Привіт! Як я можу вам допомогти?",
+      "timestamp": "2025-05-27T14:38:30.799Z"
+    },
+    {
+      "from": "user",
+      "text": "Tell me about dining\n",
+      "timestamp": "2025-05-27T14:39:23.948Z"
+    },
+    {
+      "from": "ai",
+      "text": "Azure Dream features three on-site restaurants: Ocean Pearl, which offers seafood fine dining; Terra Bistro, which serves international cuisine; and SkyBar, where you can enjoy cocktails and tapas on the rooftop. Additionally, room service is available 24/7 for guests.",
+      "timestamp": "2025-05-27T14:39:25.902Z"
+    }
+  ]
+}

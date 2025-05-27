@@ -1,43 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { Button } from "@/components/ui/Button";
-
-type Message = {
-  id: number;
-  from: "user" | "ai";
-  text: string;
-};
 
 export default function SessionDetailPage() {
   const pathname = usePathname();
   const sessionId = pathname.split("/").pop();
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState([
+    { id: 1, from: "user", text: "Привіт!" },
+    { id: 2, from: "ai", text: "Вітаю! Чим можу допомогти?" },
+  ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    async function fetchSession() {
-      try {
-        const res = await fetch(`/api/sessions/${sessionId}`);
-        const data = await res.json();
-        const enriched =
-          data.messages?.map((msg: Message, i: number) => ({
-            id: Date.now() + i,
-            from: msg.from,
-            text: msg.text,
-          })) || [];
-        setMessages(enriched);
-      } catch (err) {
-        console.error("❌ Failed to load session:", err);
-      }
-    }
-
-    fetchSession();
-  }, [sessionId]);
 
   async function sendMessage() {
     if (!input.trim()) return;
@@ -54,7 +31,10 @@ export default function SessionDetailPage() {
       const res = await fetch("/api/askAssistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userText, sessionId }),
+        body: JSON.stringify({
+          sessionId,
+          question: userText,
+        }),
       });
 
       const data = await res.json();
