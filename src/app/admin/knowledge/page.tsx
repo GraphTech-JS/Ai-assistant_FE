@@ -108,31 +108,39 @@ export default function KnowledgePage() {
 
   return (
     <div>
-      <ThemedText type="title" className="mb-4 block text-[#4b2c78]">
-        Редактор бази знань
+      <ThemedText
+        type="title"
+        className="mb-6 text-3xl font-bold text-[#4b2c78]"
+      >
+        🧠 Редактор бази знань
       </ThemedText>
 
       {documents.map((doc, index) => (
         <div
           key={index}
-          className="border border-gray-300 p-4 mb-6 rounded bg-gray-100 shadow-sm relative"
+          className="relative mb-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-md hover:shadow-lg transition-shadow duration-300"
         >
           <IoMdClose
-            className="absolute top-2 right-2 cursor-pointer"
+            className="absolute top-4 right-4 text-gray-500 hover:text-red-500 cursor-pointer text-xl transition-colors"
             onClick={() => deleteDocument(index)}
           />
-          <label className="block mb-1 font-semibold">Page Content</label>
+
+          <label className="block mb-2 font-medium text-gray-800">
+            Зміст сторінки
+          </label>
           <textarea
-            className="w-full h-32 p-2 mb-4 border rounded"
+            className="w-full h-32 resize-none rounded-lg border border-gray-300 p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
             value={doc.pageContent}
             onChange={(e) => handleChange(index, "pageContent", e.target.value)}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
-              <label className="block mb-1 font-semibold">Category</label>
+              <label className="mb-1 block text-sm font-semibold text-gray-700">
+                Категорія
+              </label>
               <input
-                className="w-full p-2 border rounded"
+                className="w-full rounded-lg border border-gray-300 p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
                 value={doc.metadata.category}
                 onChange={(e) =>
                   handleChange(index, "category", e.target.value)
@@ -141,9 +149,11 @@ export default function KnowledgePage() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold">Language</label>
+              <label className="mb-1 block text-sm font-semibold text-gray-700">
+                Мова
+              </label>
               <input
-                className="w-full p-2 border rounded"
+                className="w-full rounded-lg border border-gray-300 p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
                 value={doc.metadata.language}
                 onChange={(e) =>
                   handleChange(index, "language", e.target.value)
@@ -152,9 +162,11 @@ export default function KnowledgePage() {
             </div>
 
             <div>
-              <label className="block mb-1 font-semibold">ID</label>
+              <label className="mb-1 block text-sm font-semibold text-gray-700">
+                ID
+              </label>
               <input
-                className="w-full p-2 border rounded"
+                className="w-full rounded-lg border border-gray-300 p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
                 value={doc.metadata.id}
                 onChange={(e) => handleChange(index, "id", e.target.value)}
               />
@@ -163,10 +175,19 @@ export default function KnowledgePage() {
         </div>
       ))}
 
-      <div className="flex gap-4 items-center justify-center">
-        <Button onClick={addDocument}>+ Додати новий запис</Button>
-        <Button onClick={saveKnowledge} variant="primary">
-          Зберегти базу знань
+      <div className="flex flex-wrap gap-4 justify-center mt-8">
+        <Button
+          onClick={addDocument}
+          className="bg-vilet-400 text-violet-600 border border-violet-400 hover:bg-violet-50 transition-all shadow-sm"
+        >
+          ➕ Додати
+        </Button>
+        <Button
+          onClick={saveKnowledge}
+          variant="primary"
+          className="bg-violet-600 hover:bg-violet-700 text-white shadow-md"
+        >
+          💾 Зберегти
         </Button>
       </div>
     </div>

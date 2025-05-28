@@ -3,6 +3,7 @@
 import { ThemedText } from "@/components/ui/ThemedText";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FiMessageSquare } from "react-icons/fi";
 
 interface Session {
   id: string;
@@ -28,33 +29,47 @@ export default function SessionsPage() {
   }, []);
 
   if (loading) {
-    return <ThemedText type="text">Завантаження...</ThemedText>;
+    return (
+      <div className="space-y-3">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="animate-pulse p-4 border rounded bg-gray-100 shadow-sm"
+          >
+            <div className="h-4 bg-gray-300 rounded w-1/3 mb-2" />
+            <div className="h-3 bg-gray-300 rounded w-2/3" />
+          </div>
+        ))}
+      </div>
+    );
   }
 
   return (
     <div>
-      <ThemedText type="title" className="mb-4 block text-[#4b2c78]">
+      <ThemedText type="title" className="mb-6 block text-[#4b2c78]">
         Список сесій
       </ThemedText>
-      <ul className="space-y-2">
+      <ul className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {sessions.map((session) => (
           <li
             key={session.id}
-            className="p-4 border rounded bg-white hover:bg-blue-50 cursor-pointer
-                     shadow-sm hover:shadow-md
-                     transition-shadow duration-300 ease-in-out
-                     focus:outline-none focus:ring-2 focus:ring-blue-500"
-            tabIndex={0}
+            className="border rounded-lg bg-white hover:bg-blue-50 transition-colors shadow-sm hover:shadow-md"
           >
-            <Link href={`/admin/sessions/${session.id}`}>
-              <ThemedText type="subtitle" className="text-[#4b2c78] mr-[10px]">
-                {session.title}
-              </ThemedText>
+            <Link
+              href={`/admin/sessions/${session.id}`}
+              className="block p-5 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg h-full"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <FiMessageSquare className="text-blue-500 text-xl" />
+                <ThemedText type="subtitle" className="text-[#4b2c78]">
+                  {session.title}
+                </ThemedText>
+              </div>
               <ThemedText
                 type="text_about"
-                className="text-gray-600 text-sm truncate"
+                className="text-gray-600 text-sm line-clamp-2"
               >
-                {session.lastMessage}
+                {session.lastMessage || "Немає повідомлень"}
               </ThemedText>
             </Link>
           </li>
