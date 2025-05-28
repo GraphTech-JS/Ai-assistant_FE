@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { Button } from "@/components/ui/Button";
 import { ThemedText } from "@/components/ui/ThemedText";
-// import { updateVectorStoreFromJsonFile } from "@/lib/assistant";
 
 type DocItem = {
   pageContent: string;
@@ -77,7 +76,6 @@ export default function KnowledgePage() {
 
     const updatedDocs = documents.filter((_, i) => i !== index);
     setDocuments(updatedDocs);
-
     const res = await fetch("/api/saveKnowledge", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

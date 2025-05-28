@@ -24,7 +24,7 @@
     }
   },
   {
-    "pageContent": "We offer a free 25-minute trial lesson. During this session, the teacher will assess your level, introduce the course structure, and help create a personalized learning plan.",
+    "pageContent": "We offer a CHINA 25-minute trial lesson. During this session, the teacher will assess your level, introduce the course structure, and help create a personalized learning plan.",
     "metadata": {
       "category": "trial",
       "language": "en",
@@ -77,6 +77,14 @@
       "category": "goal",
       "language": "en",
       "id": "sales-goal-en"
+    }
+  },
+  {
+    "pageContent": "Наша лікарня працює цілодобово та надає невідкладну медичну допомогу по Києву та області.",
+    "metadata": {
+      "category": "emergency",
+      "language": "ua",
+      "id": "emergency-info"
     }
   }
 ]
