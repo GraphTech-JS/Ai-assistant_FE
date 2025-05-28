@@ -13,7 +13,7 @@ import { BaseRetriever } from "@langchain/core/retrievers";
 
 const llm = new ChatOpenAI({
   model: "gpt-4o-mini",
-  temperature: 0,
+  temperature: 0.7,
   openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 
@@ -69,9 +69,21 @@ export async function askAssistant(question: string): Promise<string> {
   if (
     !hasSources ||
     text === "" ||
-    text.toLowerCase().includes("i don't know")
+    text.toLowerCase().includes("i don't know") ||
+    text.toLowerCase().includes("не знаю")
   ) {
-    return "На жаль, не знайшов відповіді у базі знань.";
+    const fallbackResponse = await llm.invoke([
+      { role: "user", content: question },
+    ]);
+    const content =
+      typeof fallbackResponse.content === "string"
+        ? fallbackResponse.content
+        : Array.isArray(fallbackResponse.content)
+        ? fallbackResponse.content
+            .map((c: any) => (typeof c === "string" ? c : c.text || ""))
+            .join(" ")
+        : "";
+    return content.trim();
   }
 
   return text;
