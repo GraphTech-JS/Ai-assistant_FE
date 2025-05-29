@@ -1,90 +1,162 @@
 [
   {
-    "pageContent": "Наша онлайн-школа іноземних мов пропонує навчання з англійської, німецької, іспанської, французької, італійської, польської та інших мов. Ми навчаємо як дорослих, так і дітей. Заняття проходять онлайн з професійними викладачами та носіями мови.",
+    "pageContent": "Готель 'Grand Horizon' — це п’ятизірковий готель, розташований у самому серці Львова. Він поєднує розкіш, комфорт та сучасний сервіс для гостей, які цінують якість та атмосферу історичного центру міста.",
     "metadata": {
       "category": "general",
       "language": "ua",
-      "id": "about-school"
+      "id": "hotel-description"
     }
   },
   {
-    "pageContent": "We are an online language school offering courses in English, German, Spanish, French, Italian, Polish and more. Lessons are held online with qualified teachers and native speakers. We teach both adults and children.",
+    "pageContent": "Готель пропонує наступні типи номерів: 1) Стандартний номер; 2) Покращений номер; 3) Люкс; 4) Президентський люкс.",
     "metadata": {
-      "category": "general",
-      "language": "en",
-      "id": "about-school-en"
-    }
-  },
-  {
-    "pageContent": "Ми пропонуємо пробне заняття тривалістю 25 хвилин, під час якого викладач оцінить рівень знань, познайомить зі структурою курсу та допоможе сформувати персональний план навчання. Пробне заняття безкоштовне.",
-    "metadata": {
-      "category": "trial",
+      "category": "rooms",
       "language": "ua",
-      "id": "trial-lesson"
+      "id": "room-types"
     }
   },
   {
-    "pageContent": "We offer a CHINA 25-minute trial lesson. During this session, the teacher will assess your level, introduce the course structure, and help create a personalized learning plan.",
+    "pageContent": "Стандартний номер має площу 22 м², оснащений двоспальним або двома односпальними ліжками, кондиціонером, телевізором, міні-баром та безкоштовним Wi-Fi. Ціна: від 1800 грн/ніч.",
     "metadata": {
-      "category": "trial",
-      "language": "en",
-      "id": "trial-lesson-en"
-    }
-  },
-  {
-    "pageContent": "Наші курси поділені за рівнями (A1–C2) та цілями: для подорожей, роботи, навчання за кордоном, підготовки до іспитів (IELTS, TOEFL, Goethe-Zertifikat). Формати занять: індивідуальні, парні та міні-групи (до 4 людей). Хочеш перевірю просто твій рівень знань?",
-    "metadata": {
-      "category": "courses",
+      "category": "rooms",
       "language": "ua",
-      "id": "course-formats"
+      "id": "standard-room"
     }
   },
   {
-    "pageContent": "Our courses are structured by levels (A1–C2) and goals: travel, business, study abroad, and exam preparation (IELTS, TOEFL, Goethe-Zertifikat). Formats: individual, pair and mini-groups (up to 4 students).",
+    "pageContent": "Покращений номер — це просторий варіант площею 28 м² з окремою зоною для відпочинку, ванною кімнатою з халатом і тапочками, а також кава-машиною. Ціна: від 2400 грн/ніч.",
     "metadata": {
-      "category": "courses",
-      "language": "en",
-      "id": "course-formats-en"
-    }
-  },
-  {
-    "pageContent": "Викладач ставить питання щодо цілі навчання, віку, попереднього досвіду, бажаного графіку. Це допомагає підібрати оптимальний курс та формат.",
-    "metadata": {
-      "category": "conversation-guidance",
+      "category": "rooms",
       "language": "ua",
-      "id": "qualifying-questions"
+      "id": "deluxe-room"
     }
   },
   {
-    "pageContent": "The teacher asks questions about your learning goal, age, prior experience, and preferred schedule. This helps to select the best course and format.",
+    "pageContent": "Люкс — це двокімнатний номер із вітальнею та спальнею, має площу 40 м². Оснащений великим телевізором, робочим столом, ванною з джакузі та панорамним видом на місто. Ціна: від 3500 грн/ніч.",
     "metadata": {
-      "category": "conversation-guidance",
-      "language": "en",
-      "id": "qualifying-questions-en"
-    }
-  },
-  {
-    "pageContent": "Мета асистента — зацікавити користувача, пояснити переваги пробного уроку, відповісти на заперечення (наприклад, “немає часу”, “ще подумаю”) та привести до запису.",
-    "metadata": {
-      "category": "goal",
+      "category": "rooms",
       "language": "ua",
-      "id": "sales-goal"
+      "id": "suite-room"
     }
   },
   {
-    "pageContent": "The assistant's goal is to engage the user, explain the benefits of the trial lesson, handle objections (like 'I don’t have time', 'I’ll think about it'), and lead to a booking.",
+    "pageContent": "Президентський люкс — це розкішний номер площею 85 м² з окремою кухнею, переговорною кімнатою, терасою, приватним ліфтом і персональним консьєржем. Ціна: від 9500 грн/ніч.",
     "metadata": {
-      "category": "goal",
-      "language": "en",
-      "id": "sales-goal-en"
-    }
-  },
-  {
-    "pageContent": "Наша лікарня працює цілодобово та надає невідкладну медичну допомогу по Києву та області.",
-    "metadata": {
-      "category": "emergency",
+      "category": "rooms",
       "language": "ua",
-      "id": "emergency-info"
+      "id": "presidential-suite"
+    }
+  },
+  {
+    "pageContent": "Готель пропонує широкий спектр послуг: безкоштовний Wi-Fi, SPA-комплекс із сауною та басейном, ресторан європейської кухні, конференц-зали, пральня, трансфер до аеропорту, оренда авто, парковка з охороною.",
+    "metadata": {
+      "category": "services",
+      "language": "ua",
+      "id": "services"
+    }
+  },
+  {
+    "pageContent": "У готелі 'Grand Horizon' діють такі переваги: сніданок 'шведський стіл' включено у вартість, діти до 6 років проживають безкоштовно, знижка 15% на бронювання від 5 ночей, ранній заїзд і пізній виїзд за запитом.",
+    "metadata": {
+      "category": "benefits",
+      "language": "ua",
+      "id": "benefits"
+    }
+  },
+  {
+    "pageContent": "Сніданки подаються щодня з 7:00 до 10:30 у ресторані готелю. Меню включає гарячі страви, випічку, свіжі фрукти, м’ясну та сирну нарізку, соки, чай і каву. Також доступне індивідуальне меню для гостей з дієтичними обмеженнями.",
+    "metadata": {
+      "category": "food",
+      "language": "ua",
+      "id": "breakfast"
+    }
+  },
+  {
+    "pageContent": "На території готелю розміщено терасу з видом на старе місто, затишний внутрішній дворик, власний сад, а також бібліотека для гостей, що шукають спокійний відпочинок.",
+    "metadata": {
+      "category": "infrastructure",
+      "language": "ua",
+      "id": "infrastructure-1"
+    }
+  },
+  {
+    "pageContent": "Гості можуть скористатися додатковими послугами: експрес-чекін, персональний гід, фотосесія на території готелю, прикрашання номера для особливих подій, доставка квітів.",
+    "metadata": {
+      "category": "services",
+      "language": "ua",
+      "id": "extra-services"
+    }
+  },
+  {
+    "pageContent": "Бронювання можна скасувати безкоштовно за 48 годин до заїзду. У разі пізнішої відміни — стягується вартість 1 доби. Готель також пропонує тариф із повною передоплатою без можливості повернення.",
+    "metadata": {
+      "category": "booking",
+      "language": "ua",
+      "id": "cancellation-policy"
+    }
+  },
+  {
+    "pageContent": "Середній рейтинг готелю на туристичних платформах становить 9,4/10. Гості відзначають високий рівень чистоти, уважний персонал, зручне розташування та комфортні ліжка.",
+    "metadata": {
+      "category": "reviews",
+      "language": "ua",
+      "id": "guest-reviews"
+    }
+  },
+  {
+    "pageContent": "Адреса готелю: м. Львів, вул. Князя Романа, 12. До Оперного театру — 7 хв пішки, до аеропорту — 20 хв на авто. Поруч — громадський транспорт, кафе, аптеки, торгові центри.",
+    "metadata": {
+      "category": "location",
+      "language": "ua",
+      "id": "location"
+    }
+  },
+  {
+    "pageContent": "Для бізнес-гостей доступні переговорні кімнати, обладнані сучасною технікою (проєктори, екрани, мікрофони), а також послуги перекладача та секретаря.",
+    "metadata": {
+      "category": "business",
+      "language": "ua",
+      "id": "business-services"
+    }
+  },
+  {
+    "pageContent": "У готелі працює багатомовний персонал: українська, англійська, польська, німецька. Усі працівники регулярно проходять навчання з обслуговування клієнтів та етикету.",
+    "metadata": {
+      "category": "staff",
+      "language": "ua",
+      "id": "hotel-staff"
+    }
+  },
+  {
+    "pageContent": "Готель дотримується екологічної політики: сортування сміття, використання багаторазових засобів гігієни, енергозберігаюче освітлення, часткова автономність на сонячних батареях.",
+    "metadata": {
+      "category": "eco",
+      "language": "ua",
+      "id": "eco-policy"
+    }
+  },
+  {
+    "pageContent": "Для забезпечення безпеки гостей встановлено камери відеоспостереження у громадських зонах, працює цілодобова охорона, в номерах є сейфи та система аварійного виклику.",
+    "metadata": {
+      "category": "safety",
+      "language": "ua",
+      "id": "safety-measures"
+    }
+  },
+  {
+    "pageContent": "Готель надає такі переваги: фітнес-зал з кардіо- і силовим обладнанням, проводяться заняття з йоги вранці. Поруч — веломаршрути та можливість прокату електросамокатів.",
+    "metadata": {
+      "category": "fitness",
+      "language": "ua",
+      "id": "activities"
+    }
+  },
+  {
+    "pageContent": "Для дітей обладнано ігрову кімнату, є послуги няні за запитом, а також щоденні розважальні активності: майстер-класи, квести та дитячі фільми у міні-кінотеатрі.",
+    "metadata": {
+      "category": "kids",
+      "language": "ua",
+      "id": "kids-entertainment"
     }
   }
 ]

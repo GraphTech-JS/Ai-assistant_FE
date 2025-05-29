@@ -54,13 +54,24 @@ const conversationHistory: (HumanMessage | AIMessage)[] = [];
 
 export async function askAssistant(question: string): Promise<string> {
   if (!vectorStore) {
-    return "Knowledge base not initialized. Please save your data first.";
+    return "Базу знань ще не ініціалізовано. Спочатку завантажте ваші дані.";
   }
 
-  const retriever: BaseRetriever = vectorStore.asRetriever();
+  const retriever: BaseRetriever = vectorStore.asRetriever({
+    k: 3,
+  });
 
   const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
     returnSourceDocuments: true,
+    qaTemplate:
+      `Ти асистент на сайті з готелем. Відповідай **тільки** на основі наданої контекстної інформації.
+Якщо відповіді немає в контексті — **не вигадуй**, а скажи, що не маєш такої інформації.
+
+Контекст:
+{context}
+
+Питання: {question}
+Відповідь українською мовою:`.trim(),
   });
 
   const response = await chain.invoke({
@@ -70,41 +81,21 @@ export async function askAssistant(question: string): Promise<string> {
 
   const text = response.text?.trim() || "";
 
-  const isUncertain =
-    text === "" ||
-    text.toLowerCase().includes("i don't know") ||
-    text.toLowerCase().includes("не знаю");
+  const hasAnswer =
+    text &&
+    !text.toLowerCase().includes("не знаю") &&
+    !text.toLowerCase().includes("на жаль") &&
+    !text.toLowerCase().includes("не маю") &&
+    text.length > 10;
 
-  const hasSources =
-    response.sourceDocuments && response.sourceDocuments.length > 0;
-
-  if (!hasSources || isUncertain) {
-    const fallbackResponse = await llm.invoke([
-      ...conversationHistory,
-      new HumanMessage(question),
-    ]);
-
-    const content =
-      typeof fallbackResponse.content === "string"
-        ? fallbackResponse.content
-        : Array.isArray(fallbackResponse.content)
-        ? fallbackResponse.content
-            .map((c: any) => {
-              if (typeof c === "string") return c;
-              if (c && typeof c === "object") {
-                if ("text" in c && typeof c.text === "string") return c.text;
-                if ("image_url" in c && typeof c.image_url === "string")
-                  return `[Image: ${c.image_url}]`;
-              }
-              return "";
-            })
-            .join(" ")
-        : "";
+  if (!hasAnswer) {
+    const fallback =
+      "Вибачте, я не маю такої інформації. Спробуй поставити інше запитання або звернись до адміністратора.";
 
     conversationHistory.push(new HumanMessage(question));
-    conversationHistory.push(new AIMessage(content.trim()));
+    conversationHistory.push(new AIMessage(fallback));
 
-    return content.trim();
+    return fallback;
   }
 
   conversationHistory.push(new HumanMessage(question));

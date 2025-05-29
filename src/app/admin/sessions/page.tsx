@@ -76,7 +76,9 @@ export default function SessionsPage() {
         ))}
         {sessions.length === 0 && (
           <li>
-            <ThemedText type="text">Сесій ще немає.</ThemedText>
+            <ThemedText type="text" className="text-black">
+              Сесій ще немає.
+            </ThemedText>
           </li>
         )}
       </ul>
