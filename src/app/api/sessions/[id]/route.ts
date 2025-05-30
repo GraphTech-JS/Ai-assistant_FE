@@ -1,9 +1,23 @@
-// src/app/api/sessions/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
 const filePath = path.join(process.cwd(), "sessions.json");
+
+function withCORS(response: NextResponse) {
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  response.headers.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+  );
+  response.headers.set("Access-Control-Allow-Credentials", "true");
+  return response;
+}
+
+export async function OPTIONS() {
+  return withCORS(new NextResponse(null, { status: 204 }));
+}
 
 export async function GET(
   req: NextRequest,
@@ -13,20 +27,19 @@ export async function GET(
 
   try {
     if (!fs.existsSync(filePath)) {
-      return NextResponse.json({ messages: [] });
+      return withCORS(NextResponse.json({ messages: [] }));
     }
 
-    const file = await fs.promises.readFile(filePath, "utf-8"); // Use async for better performance
+    const file = await fs.promises.readFile(filePath, "utf-8");
     const data = JSON.parse(file);
 
     const messages = data[id] || [];
 
-    return NextResponse.json({ messages });
+    return withCORS(NextResponse.json({ messages }));
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Failed to load session" },
-      { status: 500 }
+    return withCORS(
+      NextResponse.json({ error: "Failed to load session" }, { status: 500 })
     );
   }
 }
@@ -41,9 +54,8 @@ export async function POST(
     const body = await req.json();
 
     if (!Array.isArray(body.messages)) {
-      return NextResponse.json(
-        { error: "Invalid messages format" },
-        { status: 400 }
+      return withCORS(
+        NextResponse.json({ error: "Invalid messages format" }, { status: 400 })
       );
     }
 
@@ -57,12 +69,11 @@ export async function POST(
 
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
 
-    return NextResponse.json({ message: "Session saved" });
+    return withCORS(NextResponse.json({ message: "Session saved" }));
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: "Failed to save session" },
-      { status: 500 }
+    return withCORS(
+      NextResponse.json({ error: "Failed to save session" }, { status: 500 })
     );
   }
 }

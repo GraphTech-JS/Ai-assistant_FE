@@ -47,7 +47,7 @@ export default function SessionsPage() {
   return (
     <div>
       <ThemedText type="title" className="mb-6 block text-[#4b2c78]">
-        Список сесій
+        Sessions List
       </ThemedText>
       <ul className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {sessions.map((session) => (
@@ -77,7 +77,7 @@ export default function SessionsPage() {
         {sessions.length === 0 && (
           <li>
             <ThemedText type="text" className="text-black">
-              Сесій ще немає.
+              There is no session yet.
             </ThemedText>
           </li>
         )}

@@ -70,7 +70,7 @@ export default function KnowledgePage() {
 
   const deleteDocument = async (index: number) => {
     const confirmDelete = confirm(
-      "Ви впевнені, що хочете видалити цей документ?"
+      "Are you sure you want to delete this document? This action cannot be undone."
     );
     if (!confirmDelete) return;
 
@@ -83,7 +83,7 @@ export default function KnowledgePage() {
     });
 
     if (!res.ok) {
-      alert("Помилка при оновленні бази знань після видалення.");
+      alert("Error updating knowledge base after deletion.");
     }
   };
 
@@ -95,14 +95,14 @@ export default function KnowledgePage() {
     });
 
     if (res.ok) {
-      alert("База знань збережена!");
+      alert("Knowledge base saved!");
       const updated = await fetch("/data/knowledge.json", {
         cache: "no-store",
       });
       const data = await updated.json();
       setDocuments(data);
     } else {
-      alert("Помилка збереження!");
+      alert("Error saving knowledge base!");
     }
   };
 
@@ -110,9 +110,9 @@ export default function KnowledgePage() {
     <div>
       <ThemedText
         type="title"
-        className="mb-6 text-3xl font-bold text-[#4b2c78]"
+        className="mb-6 ml-3 text-3xl font-bold text-[#4b2c78]"
       >
-        🧠 Редактор бази знань
+        Knowledge Base Editor
       </ThemedText>
 
       {documents.map((doc, index) => (
@@ -126,7 +126,7 @@ export default function KnowledgePage() {
           />
 
           <label className="block mb-2 font-medium text-gray-800">
-            Зміст сторінки
+            Page Content
           </label>
           <textarea
             className="w-full h-32 resize-none rounded-lg border border-gray-300 p-3 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
@@ -137,7 +137,7 @@ export default function KnowledgePage() {
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
             <div>
               <label className="mb-1 block text-sm font-semibold text-gray-700">
-                Категорія
+                Category
               </label>
               <input
                 className="w-full rounded-lg border border-gray-300 p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
@@ -150,7 +150,7 @@ export default function KnowledgePage() {
 
             <div>
               <label className="mb-1 block text-sm font-semibold text-gray-700">
-                Мова
+                Language
               </label>
               <input
                 className="w-full rounded-lg border border-gray-300 p-2.5 shadow-sm focus:outline-none focus:ring-2 focus:ring-violet-400 transition-all"
@@ -180,14 +180,14 @@ export default function KnowledgePage() {
           onClick={addDocument}
           className="bg-vilet-400 text-violet-600 border border-violet-400 hover:bg-violet-50 transition-all shadow-sm"
         >
-          ➕ Додати
+          ➕ Add
         </Button>
         <Button
           onClick={saveKnowledge}
           variant="primary"
           className="bg-violet-600 hover:bg-violet-700 text-white shadow-md"
         >
-          💾 Зберегти
+          💾 Save
         </Button>
       </div>
     </div>

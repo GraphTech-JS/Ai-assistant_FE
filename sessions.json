@@ -1,1 +1,44 @@
-{}
+{
+  "456272": [
+    {
+      "from": "user",
+      "text": "Hello",
+      "timestamp": "2025-05-30T14:33:20.924Z"
+    },
+    {
+      "from": "admin",
+      "text": "Hello, my name is Oleksii, how can I assist you today?",
+      "timestamp": "2025-05-30T14:33:45.697Z"
+    }
+  ],
+  "978295": [
+    {
+      "from": "user",
+      "text": "Hello",
+      "timestamp": "2025-05-30T14:28:28.846Z"
+    },
+    {
+      "from": "user",
+      "timestamp": "2025-05-30T14:28:49.600Z"
+    },
+    {
+      "from": "admin",
+      "text": "Hell, ny friend",
+      "timestamp": "2025-05-30T14:28:49.601Z"
+    },
+    {
+      "from": "user",
+      "timestamp": "2025-05-30T14:29:16.878Z"
+    },
+    {
+      "from": "admin",
+      "text": "How are you?",
+      "timestamp": "2025-05-30T14:29:16.878Z"
+    },
+    {
+      "from": "admin",
+      "text": "Brother",
+      "timestamp": "2025-05-30T14:30:57.701Z"
+    }
+  ]
+}

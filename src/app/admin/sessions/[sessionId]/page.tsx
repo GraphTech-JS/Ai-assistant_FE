@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/Button";
 
 type Message = {
   id: number;
-  from: "user" | "ai";
+  from: "user" | "ai" | "admin";
   text: string;
 };
 
@@ -15,30 +15,39 @@ export default function SessionDetailPage() {
   const pathname = usePathname();
   const sessionId = pathname.split("/").pop();
 
+  const [adminMode, setAdminMode] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    async function fetchSession() {
-      try {
-        const res = await fetch(`/api/sessions/${sessionId}`);
-        const data = await res.json();
-        const enriched =
-          data.messages?.map((msg: Message, i: number) => ({
-            id: Date.now() + i,
-            from: msg.from,
-            text: msg.text,
-          })) || [];
-        setMessages(enriched);
-      } catch (err) {
-        console.error("❌ Failed to load session:", err);
-      }
+  async function fetchSession() {
+    try {
+      const res = await fetch(`/api/sessions/${sessionId}`);
+      const data = await res.json();
+
+      const enriched =
+        data.messages?.map((msg: Message, i: number) => ({
+          id: Date.now() + i,
+          from: msg.from,
+          text: msg.text,
+        })) || [];
+
+      setMessages(enriched);
+    } catch (err) {
+      console.error("❌ Failed to load session:", err);
     }
+  }
+
+  useEffect(() => {
+    if (!sessionId) return;
 
     fetchSession();
+
+    const intervalId = setInterval(fetchSession, 5000);
+
+    return () => clearInterval(intervalId);
   }, [sessionId]);
 
   useEffect(() => {
@@ -46,48 +55,62 @@ export default function SessionDetailPage() {
   }, [messages]);
 
   async function sendMessage() {
+    if (!adminMode) return;
     if (!input.trim()) return;
 
-    const userText = input;
+    const messageToSend = input.trim();
+
     setMessages((msgs) => [
       ...msgs,
-      { id: Date.now(), from: "user", text: userText },
+      {
+        id: Date.now(),
+        from: "admin",
+        text: messageToSend,
+      },
     ]);
     setInput("");
+    setLoading(true);
 
     try {
-      setLoading(true);
-      const res = await fetch("/api/askAssistant", {
+      await fetch("/api/askAssistant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userText, sessionId }),
+        body: JSON.stringify({
+          admin: adminMode,
+          adminMessage: messageToSend,
+          sessionId,
+        }),
       });
 
-      const data = await res.json();
       setLoading(false);
-
+    } catch (err) {
+      setLoading(false);
       setMessages((msgs) => [
         ...msgs,
         {
           id: Date.now() + 1,
-          from: "ai",
-          text: data.answer || "Помилка відповіді.",
+          from: "admin",
+          text: "Сталася помилка.",
         },
       ]);
-    } catch (err) {
-      setMessages((msgs) => [
-        ...msgs,
-        { id: Date.now() + 1, from: "ai", text: "Сталася помилка." },
-      ]);
-      setLoading(false);
     }
   }
 
   return (
     <div className="flex flex-col h-full bg-white rounded-xl p-6 shadow-md">
       <ThemedText type="title" className="mb-4 text-[#4b2c78]">
-        Сесія #{sessionId}
+        Session #{sessionId}
       </ThemedText>
+
+      <div className="mb-4">
+        <Button
+          variant={adminMode ? "secondary" : "primary"}
+          onClick={() => setAdminMode(!adminMode)}
+          className="mb-2"
+        >
+          {adminMode ? "Exit admin mode" : "Activate admin mode"}
+        </Button>
+      </div>
 
       <div className="flex-1 overflow-auto mb-4 space-y-3 pr-2">
         {messages.map((msg) => (
@@ -97,6 +120,8 @@ export default function SessionDetailPage() {
               ${
                 msg.from === "user"
                   ? "bg-[#4b2c78] text-white self-start rounded-bl-none"
+                  : msg.from === "admin"
+                  ? "bg-[#ffcc00] text-black self-end rounded-br-none"
                   : "bg-[#eaeaea] text-gray-800 self-end rounded-br-none"
               }`}
           >
@@ -104,36 +129,33 @@ export default function SessionDetailPage() {
           </div>
         ))}
 
-        {loading && (
-          <div className="self-end bg-gray-200 px-4 py-2 rounded-lg text-sm italic text-gray-500">
-            Асистент думає...
-          </div>
-        )}
-
         <div ref={endOfMessagesRef} />
       </div>
 
-      <div className="border-t pt-4 mt-auto">
-        <div className="flex flex-col lg:flex-row gap-3">
-          <textarea
-            placeholder="Напишіть повідомлення..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 rounded-xl border border-gray-300 p-3 resize-none
-                       focus:outline-none focus:ring-2 focus:ring-[#4b2c78] shadow-sm transition"
-            rows={3}
-          />
-          <Button
-            onClick={sendMessage}
-            variant="primary"
-            size="medium"
-            loading={loading}
-            className="lg:min-w-[120px] self-end"
-          >
-            Відправити
-          </Button>
+      {adminMode && (
+        <div className="border-t pt-4 mt-auto">
+          <div className="flex flex-col lg:flex-row gap-3">
+            <textarea
+              placeholder="Type your message here..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              className="flex-1 rounded-xl border border-gray-300 p-3 resize-none
+                         focus:outline-none focus:ring-2 focus:ring-[#4b2c78] shadow-sm transition"
+              rows={3}
+              autoFocus
+            />
+            <Button
+              onClick={sendMessage}
+              variant="primary"
+              size="medium"
+              loading={loading}
+              className="lg:min-w-[120px] self-end"
+            >
+              Send
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

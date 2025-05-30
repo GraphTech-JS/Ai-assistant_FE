@@ -30,7 +30,7 @@ export default function AdminLayout({
     <>
       <div className="flex h-screen">
         <aside
-          className={`fixed top-0 left-0 h-full w-64 bg-[#4b2c78] text-white flex flex-col p-6 transition-transform duration-300 ease-in-out
+          className={`fixed top-0 left-0 h-full w-68 bg-[#4b2c78] text-white flex flex-col p-6 transition-transform duration-300 ease-in-out
           ${
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 md:static md:flex`}
@@ -48,7 +48,7 @@ export default function AdminLayout({
               onClick={() => setIsMenuOpen(false)} // закрыть меню на моб при клике
             >
               <ThemedText type="subtitle" className="text-white">
-                База знань
+                Knowledge Base
               </ThemedText>
             </Link>
             <Link
@@ -57,7 +57,7 @@ export default function AdminLayout({
               onClick={() => setIsMenuOpen(false)}
             >
               <ThemedText type="subtitle" className="text-white">
-                Сесії
+                Sessions
               </ThemedText>
             </Link>
             <button
