@@ -1,5 +1,5 @@
 import { askAssistant, updateVectorStoreFromJsonFile } from "@/lib/assistant";
-import { saveMessage } from "@/lib/sessions";
+import { isAdminSession, saveMessage } from "@/lib/sessions";
 import { NextRequest, NextResponse } from "next/server";
 
 const corsHeaders = {
@@ -12,31 +12,14 @@ export async function OPTIONS() {
   return NextResponse.json({}, { headers: corsHeaders });
 }
 
-const admin = true; // control access to admin functionality
-// Set to false if you want to disable admin functionality
-// Set to true if you want to enable admin functionality
-
 export async function POST(req: NextRequest) {
   try {
     await updateVectorStoreFromJsonFile();
     const { question, sessionId, adminMessage } = await req.json();
 
-    if (question?.trim()) {
-      saveMessage(sessionId, {
-        from: "user",
-        text: question,
-        timestamp: new Date().toISOString(),
-      });
-    }
+    const isAdmin = isAdminSession(sessionId);
 
-    if (admin === true) {
-      if (!adminMessage?.trim()) {
-        return NextResponse.json(
-          { error: "No adminMessage provided" },
-          { status: 400, headers: corsHeaders }
-        );
-      }
-
+    if (adminMessage?.trim()) {
       saveMessage(sessionId, {
         from: "admin",
         text: adminMessage,
@@ -50,6 +33,22 @@ export async function POST(req: NextRequest) {
     }
 
     if (question?.trim()) {
+      saveMessage(sessionId, {
+        from: "user",
+        text: question,
+        timestamp: new Date().toISOString(),
+      });
+
+      if (isAdmin) {
+        return NextResponse.json(
+          {
+            error:
+              "Адміністратор уже долучився до цієї сесії. Подальші відповіді від AI вимкнено.",
+          },
+          { status: 403, headers: corsHeaders }
+        );
+      }
+
       const answer = await askAssistant(question);
 
       saveMessage(sessionId, {
@@ -62,7 +61,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: "No valid question provided" },
+      { error: "No valid question or admin message provided" },
       { status: 400, headers: corsHeaders }
     );
   } catch (error) {
