@@ -57,21 +57,10 @@ export async function askAssistant(question: string): Promise<string> {
     return "Базу знань ще не ініціалізовано. Спочатку завантажте ваші дані.";
   }
 
-  const retriever: BaseRetriever = vectorStore.asRetriever({
-    k: 3,
-  });
+  const retriever: BaseRetriever = vectorStore.asRetriever({ k: 3 });
 
   const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
     returnSourceDocuments: true,
-    qaTemplate:
-      `Ти асистент на сайті з готелем. Відповідай **тільки** на основі наданої контекстної інформації.
-Якщо відповіді немає в контексті — **не вигадуй**, а скажи, що не маєш такої інформації.
-
-Контекст:
-{context}
-
-Питання: {question}
-Відповідь українською мовою:`.trim(),
   });
 
   const response = await chain.invoke({
@@ -88,18 +77,22 @@ export async function askAssistant(question: string): Promise<string> {
     !text.toLowerCase().includes("не маю") &&
     text.length > 10;
 
-  if (!hasAnswer) {
-    const fallback =
-      "Вибачте, я не маю такої інформації. Спробуй поставити інше запитання або звернись до адміністратора.";
+  conversationHistory.push(new HumanMessage(question));
 
-    conversationHistory.push(new HumanMessage(question));
-    conversationHistory.push(new AIMessage(fallback));
-
-    return fallback;
+  if (hasAnswer) {
+    conversationHistory.push(new AIMessage(text));
+    return text;
   }
 
-  conversationHistory.push(new HumanMessage(question));
-  conversationHistory.push(new AIMessage(text));
+  const fallbackResponse = await llm.invoke([
+    ...conversationHistory,
+    new HumanMessage(question),
+  ]);
 
-  return text;
+  const finalText =
+    fallbackResponse.content?.toString().trim() ||
+    "На жаль, не зміг знайти відповідь.";
+
+  conversationHistory.push(new AIMessage(finalText));
+  return finalText;
 }
