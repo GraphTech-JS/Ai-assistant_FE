@@ -1,164 +1,70 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ThemedText } from "@/components/ui/ThemedText";
 import { Button } from "@/components/ui/Button";
 
-type Message = {
-  id: number;
-  from: "user" | "ai" | "admin";
-  text: string;
-};
+const mockMessages = [
+  { id: 1, from: "user", text: "Привіт!" },
+  { id: 2, from: "ai", text: "Вітаю! Чим можу допомогти?" },
+];
 
 export default function SessionDetailPage() {
   const pathname = usePathname();
   const sessionId = pathname.split("/").pop();
 
-  const [adminMode, setAdminMode] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState(mockMessages);
   const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  const endOfMessagesRef = useRef<HTMLDivElement>(null);
-
-  async function fetchSession() {
-    try {
-      const res = await fetch(`/api/sessions/${sessionId}`);
-      const data = await res.json();
-
-      const enriched =
-        data.messages?.map((msg: Message, i: number) => ({
-          id: Date.now() + i,
-          from: msg.from,
-          text: msg.text,
-        })) || [];
-
-      setMessages(enriched);
-    } catch (err) {
-      console.error("❌ Failed to load session:", err);
-    }
-  }
-
-  useEffect(() => {
-    if (!sessionId) return;
-
-    fetchSession();
-
-    const intervalId = setInterval(fetchSession, 5000);
-
-    return () => clearInterval(intervalId);
-  }, [sessionId]);
-
-  useEffect(() => {
-    endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  async function sendMessage() {
-    if (!adminMode) return;
+  function sendMessage() {
     if (!input.trim()) return;
-
-    const messageToSend = input.trim();
-
     setMessages((msgs) => [
       ...msgs,
-      {
-        id: Date.now(),
-        from: "admin",
-        text: messageToSend,
-      },
+      { id: Date.now(), from: "user", text: input },
     ]);
     setInput("");
-    setLoading(true);
-
-    try {
-      await fetch("/api/askAssistant", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          admin: adminMode,
-          adminMessage: messageToSend,
-          sessionId,
-        }),
-      });
-
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      setMessages((msgs) => [
-        ...msgs,
-        {
-          id: Date.now() + 1,
-          from: "admin",
-          text: "Сталася помилка.",
-        },
-      ]);
-    }
   }
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-xl p-6 shadow-md">
-      <ThemedText type="title" className="mb-4 text-[#4b2c78]">
-        Session #{sessionId}
+    <div className="flex flex-col h-full bg-white rounded p-4">
+      <ThemedText type="title" className="mb-4">
+        Сесія {sessionId}
       </ThemedText>
 
-      <div className="mb-4">
-        <Button
-          variant={adminMode ? "secondary" : "primary"}
-          onClick={() => setAdminMode(!adminMode)}
-          className="mb-2"
-        >
-          {adminMode ? "Exit admin mode" : "Activate admin mode"}
-        </Button>
-      </div>
-
-      <div className="flex-1 overflow-auto mb-4 space-y-3 pr-2">
-        {messages.map((msg) => (
+      <div className="flex-1 overflow-auto mb-4 space-y-3 flex flex-col">
+        {messages.map((msg, i) => (
           <div
             key={msg.id}
-            className={`max-w-[110%] rounded-xl p-4 text-sm whitespace-pre-wrap break-words transition-all
-              ${
-                msg.from === "user"
-                  ? "bg-[#4b2c78] text-white self-start rounded-bl-none"
-                  : msg.from === "admin"
-                  ? "bg-[#ffcc00] text-black self-end rounded-br-none"
-                  : "bg-[#eaeaea] text-gray-800 self-end rounded-br-none"
-              }`}
+            className={`p-3 rounded-[15px] max-w-[500px] break-words
+        ${
+          msg.from === "user"
+            ? "bg-[#4b2c78] self-start text-left text-white"
+            : "bg-[#782c59] self-end text-right"
+        }
+        animate-fadeIn`}
+            style={{ animationDelay: `${i * 100}ms` }}
           >
-            {msg.text}
+            <ThemedText type="text" className="whitespace-pre-wrap">
+              {msg.text}
+            </ThemedText>
           </div>
         ))}
-
-        <div ref={endOfMessagesRef} />
       </div>
 
-      {adminMode && (
-        <div className="border-t pt-4 mt-auto">
-          <div className="flex flex-col lg:flex-row gap-3">
-            <textarea
-              placeholder="Type your message here..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 rounded-xl border border-gray-300 p-3 resize-none
-                         focus:outline-none focus:ring-2 focus:ring-[#4b2c78] shadow-sm transition"
-              rows={3}
-              autoFocus
-            />
-            <Button
-              onClick={sendMessage}
-              variant="primary"
-              size="medium"
-              loading={loading}
-              className="lg:min-w-[120px] self-end"
-            >
-              Send
-            </Button>
-          </div>
-        </div>
-      )}
+      <div className="flex flex-col lg:flex-row gap-2">
+        <textarea
+          placeholder="Напишіть повідомлення"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="flex-1 rounded border border-gray-300 p-2 resize-none
+                     focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+          rows={3}
+        />
+        <Button onClick={sendMessage} variant="primary" size="medium">
+          Відправити
+        </Button>
+      </div>
     </div>
   );
 }
-
-// Розкажи про матрицю під зааклепку намистину
-// Чим би ти порадив мені почистити швейну машинку?
