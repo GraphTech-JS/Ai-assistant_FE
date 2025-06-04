@@ -17,6 +17,8 @@ export default function LoginPage() {
     if (email === "Admin@test.com" && password === "Admin123#") {
       localStorage.setItem("isAdminLoggedIn", "true");
       router.push("/admin");
+    } else if (email === "user@test.com" && password === "user123#") {
+      router.push("/user");
     } else {
       setError("Невірний email або пароль");
     }
