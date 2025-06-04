@@ -50,7 +50,7 @@ export async function updateVectorStoreFromJsonFile(): Promise<void> {
 
   vectorStore = await Chroma.fromDocuments(docs, embeddings, {
     collectionName: "furniture-knowledge-base",
-    url: "http://localhost:8000",
+    url: process.env.CHROMA_URL || "http://localhost:8000",
   });
 }
 
