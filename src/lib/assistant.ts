@@ -49,7 +49,7 @@ export async function updateVectorStoreFromJsonFile(): Promise<void> {
   );
 
   vectorStore = await Chroma.fromDocuments(docs, embeddings, {
-    collectionName: "hotel-knowledge-base",
+    collectionName: "furniture-knowledge-base",
     url: "http://localhost:8000",
   });
 }
@@ -79,7 +79,10 @@ export async function askAssistant(question: string): Promise<string> {
   ]);
 
   const ragChain = RunnableSequence.from([
-    async (input: { question: string; chat_history: any }) => {
+    async (input: {
+      question: string;
+      chat_history: (HumanMessage | AIMessage)[];
+    }) => {
       const contextDocs = await retriever.getRelevantDocuments(input.question);
       return {
         ...input,

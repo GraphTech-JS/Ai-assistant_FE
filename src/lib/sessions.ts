@@ -3,6 +3,11 @@ import path from "path";
 
 const filePath = path.join(process.cwd(), "sessions.json");
 
+type Message = {
+  from?: string;
+  [key: string]: unknown;
+};
+
 export function saveMessage(sessionId: string, message: unknown) {
   let data: Record<string, unknown[]> = {};
   if (fs.existsSync(filePath)) {
@@ -24,7 +29,7 @@ export function isAdminSession(sessionId: string): boolean {
   const file = fs.readFileSync(filePath, "utf-8");
   const data = JSON.parse(file);
 
-  const messages = data[sessionId] || [];
+  const messages: Message[] = data[sessionId] || [];
 
-  return messages.some((msg: any) => msg.from === "admin");
+  return messages.some((msg: Message) => msg.from === "admin");
 }

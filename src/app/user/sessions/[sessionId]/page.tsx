@@ -9,24 +9,25 @@ export default function SessionDetailPage() {
   const pathname = usePathname();
   const sessionId = pathname.split("/").pop();
 
-  const [messages, setMessages] = useState([]);
+  type Message = { id: number; from: string; text: string };
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function fetchMessages() {
-    try {
-      const res = await fetch(`/api/sessions/${sessionId}`);
-      const data = await res.json();
-      if (data.messages) {
-        setMessages(data.messages);
-      }
-    } catch (e) {
-      console.error("❌ Failed to fetch session messages", e);
-    }
-  }
-
   useEffect(() => {
     if (!sessionId) return;
+
+    async function fetchMessages() {
+      try {
+        const res = await fetch(`/api/sessions/${sessionId}`);
+        const data = await res.json();
+        if (data.messages) {
+          setMessages(data.messages);
+        }
+      } catch (e) {
+        console.error("❌ Failed to fetch session messages", e);
+      }
+    }
 
     fetchMessages();
 

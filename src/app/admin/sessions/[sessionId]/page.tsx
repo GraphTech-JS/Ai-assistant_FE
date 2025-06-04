@@ -22,26 +22,26 @@ export default function SessionDetailPage() {
 
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
 
-  async function fetchSession() {
-    try {
-      const res = await fetch(`/api/sessions/${sessionId}`);
-      const data = await res.json();
-
-      const enriched =
-        data.messages?.map((msg: Message, i: number) => ({
-          id: Date.now() + i,
-          from: msg.from,
-          text: msg.text,
-        })) || [];
-
-      setMessages(enriched);
-    } catch (err) {
-      console.error("❌ Failed to load session:", err);
-    }
-  }
-
   useEffect(() => {
     if (!sessionId) return;
+
+    async function fetchSession() {
+      try {
+        const res = await fetch(`/api/sessions/${sessionId}`);
+        const data = await res.json();
+
+        const enriched =
+          data.messages?.map((msg: Message, i: number) => ({
+            id: Date.now() + i,
+            from: msg.from,
+            text: msg.text,
+          })) || [];
+
+        setMessages(enriched);
+      } catch (err) {
+        console.error("❌ Failed to load session:", err);
+      }
+    }
 
     fetchSession();
 
@@ -85,6 +85,7 @@ export default function SessionDetailPage() {
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      console.log(err);
       setMessages((msgs) => [
         ...msgs,
         {
