@@ -7,14 +7,18 @@ import { ChatOpenAI } from "@langchain/openai";
 import { Chroma } from "@langchain/community/vectorstores/chroma";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { Document } from "@langchain/core/documents";
-import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { VectorStore } from "@langchain/core/vectorstores";
-import { BaseRetriever } from "@langchain/core/retrievers";
 import { AIMessage, HumanMessage } from "@langchain/core/messages";
+import { BaseRetriever } from "@langchain/core/retrievers";
+import { RunnableSequence } from "@langchain/core/runnables";
+import {
+  ChatPromptTemplate,
+  MessagesPlaceholder,
+} from "@langchain/core/prompts";
 
 const llm = new ChatOpenAI({
   model: "gpt-4o-mini",
-  temperature: 0,
+  temperature: 0.3,
   openAIApiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 });
 
@@ -57,18 +61,43 @@ export async function askAssistant(question: string): Promise<string> {
     return "Базу знань ще не ініціалізовано. Спочатку завантажте ваші дані.";
   }
 
-  const retriever: BaseRetriever = vectorStore.asRetriever({ k: 3 });
+  const retriever: BaseRetriever = vectorStore.asRetriever({ k: 5 });
 
-  const chain = ConversationalRetrievalQAChain.fromLLM(llm, retriever, {
-    returnSourceDocuments: true,
-  });
+  const prompt = ChatPromptTemplate.fromMessages([
+    [
+      "system",
+      "Ти — помічник інтернет-магазину товарів для шиття. Відповідай **тільки на основі наданого контексту** з бази знань. Якщо знайдено товари, що відповідають на запит користувача — поясни, чому вони корисні, і наведи їх опис, ціну, посилання тощо. Не вигадуй інформацію, якої немає в контексті. Якщо немає відповідних товарів або інформації — просто скажи: 'У базі знань немає відповідних товарів до вашого запиту'.",
+    ],
+    new MessagesPlaceholder("chat_history"),
+    [
+      "human",
+      `Контекст:
+{context}
 
-  const response = await chain.invoke({
+Питання: {question}`,
+    ],
+  ]);
+
+  const ragChain = RunnableSequence.from([
+    async (input: { question: string; chat_history: any }) => {
+      const contextDocs = await retriever.getRelevantDocuments(input.question);
+      return {
+        ...input,
+        context: contextDocs.map((doc) => doc.pageContent).join("\n\n---\n\n"),
+      };
+    },
+    prompt,
+    llm,
+  ]);
+
+  conversationHistory.push(new HumanMessage(question));
+
+  const response = await ragChain.invoke({
     question,
     chat_history: conversationHistory,
   });
 
-  const text = response.text?.trim() || "";
+  const text = response.content?.toString().trim() || "";
 
   const hasAnswer =
     text &&
@@ -76,8 +105,6 @@ export async function askAssistant(question: string): Promise<string> {
     !text.toLowerCase().includes("на жаль") &&
     !text.toLowerCase().includes("не маю") &&
     text.length > 10;
-
-  conversationHistory.push(new HumanMessage(question));
 
   if (hasAnswer) {
     conversationHistory.push(new AIMessage(text));
